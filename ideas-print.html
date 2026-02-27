@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Shiptivitas — Three Actionable Ideas</title>
+  <style>
+    @page { margin: 2cm; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #1E293B;
+      max-width: 780px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    .cover {
+      border-bottom: 3px solid #4F46E5;
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+    }
+    .cover h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #4F46E5;
+    }
+    .cover .sub {
+      font-size: 13px;
+      color: #64748B;
+      margin-top: 6px;
+    }
+    .data-strip {
+      display: flex;
+      gap: 24px;
+      margin-top: 16px;
+    }
+    .stat {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 10px 16px;
+    }
+    .stat .num { font-size: 22px; font-weight: 800; color: #10B981; }
+    .stat .lbl { font-size: 11px; color: #64748B; margin-top: 2px; }
+
+    /* Context box */
+    .context {
+      background: #F8FAFC;
+      border-left: 4px solid #4F46E5;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      font-size: 12.5px;
+      color: #475569;
+    }
+
+    /* Idea sections */
+    .idea {
+      margin-bottom: 36px;
+      page-break-inside: avoid;
+    }
+    .idea-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .idea-num {
+      width: 32px; height: 32px;
+      background: #4F46E5;
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .idea-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1E293B;
+    }
+
+    .field {
+      margin-bottom: 10px;
+    }
+    .field-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #4F46E5;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+    .field-body {
+      font-size: 13px;
+      color: #334155;
+    }
+    .impact-badge {
+      display: inline-block;
+      background: #DCFCE7;
+      color: #15803D;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 2px 10px;
+      border-radius: 100px;
+      margin-bottom: 4px;
+    }
+
+    /* Wireframe boxes */
+    .wireframe {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: #475569;
+      white-space: pre;
+      line-height: 1.5;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #E2E8F0;
+      margin: 28px 0;
+    }
+
+    /* Summary table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      margin-top: 8px;
+    }
+    th {
+      background: #4F46E5;
+      color: white;
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+    td { padding: 8px 12px; border-bottom: 1px solid #E2E8F0; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #F8FAFC; }
+
+    .rec {
+      background: #FFF7ED;
+      border: 1px solid #FED7AA;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 16px;
+      font-size: 12.5px;
+      color: #92400E;
+    }
+    .rec strong { color: #C2410C; }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>Shiptivitas — Three Actionable Ideas</h1>
+  <div class="sub">Growing Daily Active Users &nbsp;·&nbsp; Based on Kanban Board Feature Data</div>
+  <div class="data-strip">
+    <div class="stat">
+      <div class="num">3.63</div>
+      <div class="lbl">Avg DAU Before (Feb–Jun 2018)</div>
+    </div>
+    <div class="stat">
+      <div class="num">11.79</div>
+      <div class="lbl">Avg DAU After (Jun 2018–Feb 2019)</div>
+    </div>
+    <div class="stat">
+      <div class="num">+225%</div>
+      <div class="lbl">DAU lift from Kanban launch</div>
+    </div>
+    <div class="stat">
+      <div class="num">486</div>
+      <div class="lbl">Status changes across 200 cards</div>
+    </div>
+  </div>
+</div>
+
+<div class="context">
+  <strong>Data context:</strong> The Kanban board feature launched Jun 2, 2018 and tripled average DAU.
+  However, DAU has since plateaued at ~11–13 on weekdays. The top card (Kutch-Mueller) changed
+  status 6 times — showing a core group of engaged users actively managing cards through the full
+  pipeline. The goal of these ideas is to turn that engaged minority into a daily habit for everyone.
+</div>
+
+<!-- IDEA 1 -->
+<div class="idea">
+  <div class="idea-header">
+    <div class="idea-num">1</div>
+    <div class="idea-title">Card Comments &amp; @Mentions</div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">Hypothesis</div>
+    <div class="field-body">
+      If users can leave threaded comments on cards and @mention teammates, the resulting
+      notification loop will pull people back to the board daily to read and respond —
+      turning Shiptivitas from a tool you check occasionally into one you open every morning.
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">Expected Impact</div>
+    <div class="impact-badge">+40–50% DAU</div>
+    <div class="field-body">
+      Social notification loops are the highest-proven driver of daily retention in B2B tools.
+      Each @mention creates an immediate reason for a second user to open the app that same day.
+      With 100 users already in the system, even a 20% @mention rate per card move would
+      generate ~97 extra daily visits per week.
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">What the feature is</div>
+    <div class="field-body">
+      A comment thread on every card. Users type inline comments on the card detail view.
+      Typing <strong>@</strong> autocompletes teammate names. Mentioned users receive an
+      in-app notification badge and an email alert. The board view shows an unread comment
+      count on each card so anyone scanning the columns can see where conversations are active.
+    </div>
+  </div>
+
+  <div class="wireframe">┌──────────────────────────────────────────┐
+│  Kutch-Mueller    [in-progress]  💬 2    │
+└──────────────────────────────────────────┘
+         ↓ open card ↓
+┌──────────────────────────────────────────────┐
+│  Comments                                    │
+│  ────────────────────────────────────────    │
+│  Sarah  Jun 3  09:12                        │
+│  Moved to in-progress. @Mike please review  │
+│  the customs docs by EOD.                   │
+│                                              │
+│  Mike  Jun 3  10:45  [NEW]                  │
+│  On it — will update status by 5pm.         │
+│  ────────────────────────────────────────    │
+│  [ Add a comment...                 Send ]  │
+└──────────────────────────────────────────────┘</div>
+</div>
+
+<hr/>
+
+<!-- IDEA 2 -->
+<div class="idea">
+  <div class="idea-header">
+    <div class="idea-num">2</div>
+    <div class="idea-title">Personalised Daily Digest Email</div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">Hypothesis</div>
+    <div class="field-body">
+      If users receive a short morning email showing what changed on the board overnight and
+      which of their cards need attention, they will open the app daily to act on their
+      workload — even on days they had no other reason to log in.
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">Expected Impact</div>
+    <div class="impact-badge">+30–35% DAU</div>
+    <div class="field-body">
+      Our data shows DAU has plateaued around 11–13 users on weekdays after the initial
+      launch spike. Email re-engagement is the most reliable way to lift that floor.
+      B2B digest emails routinely see 45–60% open rates, and a well-timed email converts
+      a passive user into an active one for that day. Over 30 days this compounds into a
+      sustained 30%+ lift in the monthly active baseline.
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">What the feature is</div>
+    <div class="field-body">
+      A 9am daily email (user's local timezone) personalised per team member, showing:
+      (1) cards that moved status since their last login, (2) stale cards they own that
+      haven't moved in 3+ days, and (3) one-click deep links directly into the app for
+      each card. No changes to the card schema needed — reads straight from
+      <code>card_change_history</code> and <code>login_history</code> which already exist.
+    </div>
+  </div>
+
+  <div class="wireframe">  Subject: Your Shiptivitas board — 2 updates since yesterday
+
+  Hi Mike,
+
+  ────────────────────────────────────────
+  MOVED SINCE YOU LAST LOGGED IN
+  ────────────────────────────────────────
+  ✅  Kutch-Mueller → Complete   (Sarah, yesterday)
+  🔄  Osinski Inc → In-Progress  (Anna, yesterday)
+
+  ────────────────────────────────────────
+  NEEDS ATTENTION
+  ────────────────────────────────────────
+  ⏰  O'Kon Group — stuck in Backlog for 4 days
+      [ Open card → ]
+
+  ────────────────────────────────────────
+  [ Open board → ]          Unsubscribe</div>
+</div>
+
+<hr/>
+
+<!-- IDEA 3 -->
+<div class="idea">
+  <div class="idea-header">
+    <div class="idea-num">3</div>
+    <div class="idea-title">Stuck-Card Nudges &amp; Stale Indicators</div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">Hypothesis</div>
+    <div class="field-body">
+      If users are automatically alerted when a card hasn't changed status in N days,
+      they will log in to action it — making Shiptivitas a proactive workflow partner
+      that surfaces problems before they become missed deadlines, rather than a passive
+      board users only check reactively.
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">Expected Impact</div>
+    <div class="impact-badge">+20–25% DAU</div>
+    <div class="field-body">
+      The data shows 486 status changes across 200 cards — an average of only 2.4 moves
+      per card over 8 months. Many cards are clearly sitting idle. Nudges turn that idle
+      state into a daily engagement trigger. A higher card completion rate also improves
+      the core value of the product, driving NPS and word-of-mouth to new freight managers.
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label">What the feature is</div>
+    <div class="field-body">
+      Cards that have not moved status in <strong>3 days</strong> (configurable) get an
+      amber left border and a clock icon showing how many days it has been stuck (e.g. "⏱ 4d").
+      Clicking the clock opens a one-action prompt to move the card forward. Team leads
+      also receive a weekly Stuck Cards Report every Monday.
+    </div>
+  </div>
+
+  <div class="wireframe">┌──────────────────────────────────────────┐
+▌  O'Kon Group       [backlog]  ⏱ 4d     │  ← amber border
+│  Priority: 3                             │
+└──────────────────────────────────────────┘
+         ↓ click clock ↓
+┌──────────────────────────────────────────────┐
+│  This card has been in Backlog for 4 days.  │
+│  Ready to move it forward?                  │
+│                                              │
+│  [ Move to In-Progress ]    [ Dismiss ]     │
+└──────────────────────────────────────────────┘</div>
+</div>
+
+<hr/>
+
+<!-- Summary -->
+<h2 style="font-size:15px; font-weight:700; margin-bottom:10px;">Summary</h2>
+<table>
+  <tr>
+    <th>#</th><th>Feature</th><th>Core Mechanism</th><th>Est. DAU Lift</th>
+  </tr>
+  <tr>
+    <td>1</td><td>Card Comments &amp; @Mentions</td><td>Social notification loop</td><td>+40–50%</td>
+  </tr>
+  <tr>
+    <td>2</td><td>Personalised Daily Digest Email</td><td>Email re-engagement</td><td>+30–35%</td>
+  </tr>
+  <tr>
+    <td>3</td><td>Stuck-Card Nudges</td><td>Proactive workflow alerts</td><td>+20–25%</td>
+  </tr>
+</table>
+
+<div class="rec">
+  <strong>Recommended shipping order: 3 → 2 → 1.</strong>
+  Idea 3 is lowest-effort (reads existing <code>card_change_history</code> timestamps),
+  delivers immediate value to managers, and creates the data signal that makes Idea 2's
+  digest emails more useful. Idea 1 has the highest long-term DAU ceiling but requires
+  the most backend work (new comments table + notification service).
+</div>
+
+</body>
+</html>

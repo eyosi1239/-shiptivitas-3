@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shiptivitas — Analytics Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #F1F5F9;
+      color: #1E293B;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #4F46E5;
+      color: white;
+      padding: 22px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .logo {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 16px;
+    }
+    header h1 { font-size: 20px; font-weight: 700; }
+    header p  { font-size: 13px; opacity: 0.75; margin-top: 2px; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 40px 48px;
+    }
+
+    /* KPI cards */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .kpi {
+      background: white;
+      border-radius: 12px;
+      padding: 20px 22px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .kpi .label {
+      font-size: 11px; font-weight: 600; color: #64748B;
+      text-transform: uppercase; letter-spacing: 0.6px;
+    }
+    .kpi .value {
+      font-size: 32px; font-weight: 800; color: #1E293B;
+      line-height: 1.15; margin-top: 6px;
+    }
+    .kpi .sub { font-size: 12px; color: #94A3B8; margin-top: 3px; }
+    .kpi.positive .value { color: #10B981; }
+
+    /* Chart cards */
+    .chart-card {
+      background: white;
+      border-radius: 12px;
+      padding: 28px 32px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+    }
+    .chart-card h2 { font-size: 16px; font-weight: 700; }
+    .chart-card p  { font-size: 13px; color: #64748B; margin-top: 5px; line-height: 1.5; margin-bottom: 16px; }
+
+    .badge-release {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #FEE2E2; color: #DC2626;
+      font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 100px; margin-bottom: 16px;
+    }
+
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 16px;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; color: #475569;
+    }
+    .legend-swatch { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+    .legend-dash { width: 22px; border-top: 2px dashed; flex-shrink: 0; }
+    .legend-vline { width: 2px; height: 14px; border-left: 2px dashed #EF4444; flex-shrink: 0; }
+
+    footer {
+      text-align: center; padding: 20px;
+      font-size: 12px; color: #94A3B8;
+    }
+
+    @media (max-width: 768px) {
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .container { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">S</div>
+  <div>
+    <h1>Shiptivitas Analytics Dashboard</h1>
+    <p>Kanban Board Feature Impact &nbsp;·&nbsp; Data: Feb 2018 – Feb 2019 &nbsp;·&nbsp; Source: shiptivity.db</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="label">Avg DAU Before</div>
+      <div class="value">3.63</div>
+      <div class="sub">Feb 3 – Jun 1, 2018</div>
+    </div>
+    <div class="kpi positive">
+      <div class="label">Avg DAU After</div>
+      <div class="value">11.79</div>
+      <div class="sub">Jun 2, 2018 – Feb 1, 2019</div>
+    </div>
+    <div class="kpi positive">
+      <div class="label">DAU Lift</div>
+      <div class="value">+225%</div>
+      <div class="sub">Since Kanban board launch</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Total Status Changes</div>
+      <div class="value">486</div>
+      <div class="sub">Across 200 cards</div>
+    </div>
+  </div>
+
+  <!-- Chart 1: DAU -->
+  <div class="chart-card">
+    <h2>Daily Active Users — Before vs After Kanban Board Feature</h2>
+    <p>
+      Unique users who logged in per day (Feb 2018 – Feb 2019).<br>
+      Feature released on <strong>Jun 2, 2018</strong>. Average DAU tripled within the first week.
+    </p>
+    <span class="badge-release">&#9650; Feature Release: Jun 2, 2018</span>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#94A3B8"></div>
+        DAU — Before feature
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#4F46E5"></div>
+        DAU — After feature
+      </div>
+      <div class="legend-item">
+        <div class="legend-dash" style="border-color:#94A3B8"></div>
+        Avg before (3.63)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dash" style="border-color:#4F46E5"></div>
+        Avg after (11.79)
+      </div>
+      <div class="legend-item">
+        <div class="legend-vline"></div>
+        Feature release
+      </div>
+    </div>
+
+    <canvas id="dauChart" height="70"></canvas>
+  </div>
+
+  <!-- Chart 2: Status Changes by Card -->
+  <div class="chart-card">
+    <h2>Status Changes by Card — Top 20</h2>
+    <p>
+      Total number of status changes per card, ranked highest to lowest.<br>
+      Showing the 20 most-moved cards out of 200 total.
+    </p>
+    <canvas id="statusChart" height="90"></canvas>
+  </div>
+
+</div>
+
+<footer>
+  Shiptivitas &nbsp;·&nbsp; Analytics Dashboard &nbsp;·&nbsp; Data source: shiptivity.db
+</footer>
+
+<script>
+// ============================================================
+// Real data from shiptivity.db
+// ============================================================
+
+// Full DAU time-series — 352 data points
+// Format: [date, dau]  — feature released at index 107 (2018-06-02)
+const raw = [
+  ['2018-02-03',1],['2018-02-05',1],['2018-02-08',1],['2018-02-09',1],
+  ['2018-02-11',2],['2018-02-12',2],['2018-02-14',1],['2018-02-15',1],
+  ['2018-02-17',1],['2018-02-18',1],['2018-02-19',2],['2018-02-21',1],
+  ['2018-02-22',4],['2018-02-23',1],['2018-02-24',1],['2018-02-26',3],
+  ['2018-02-27',1],['2018-02-28',3],['2018-03-01',5],['2018-03-02',3],
+  ['2018-03-03',2],['2018-03-04',2],['2018-03-05',4],['2018-03-06',3],
+  ['2018-03-07',2],['2018-03-08',2],['2018-03-09',5],['2018-03-10',3],
+  ['2018-03-11',3],['2018-03-12',3],['2018-03-13',3],['2018-03-14',5],
+  ['2018-03-15',5],['2018-03-16',2],['2018-03-17',7],['2018-03-18',4],
+  ['2018-03-19',6],['2018-03-20',3],['2018-03-21',6],['2018-03-22',1],
+  ['2018-03-23',3],['2018-03-24',6],['2018-03-25',2],['2018-03-26',1],
+  ['2018-03-27',3],['2018-03-28',4],['2018-03-29',4],['2018-03-30',2],
+  ['2018-03-31',3],['2018-04-01',2],['2018-04-02',1],['2018-04-03',4],
+  ['2018-04-04',4],['2018-04-05',4],['2018-04-06',1],['2018-04-07',5],
+  ['2018-04-08',2],['2018-04-09',2],['2018-04-10',1],['2018-04-12',2],
+  ['2018-04-13',2],['2018-04-14',5],['2018-04-15',4],['2018-04-16',4],
+  ['2018-04-17',2],['2018-04-18',2],['2018-04-19',3],['2018-04-20',3],
+  ['2018-04-21',3],['2018-04-22',1],['2018-04-23',5],['2018-04-24',3],
+  ['2018-04-25',4],['2018-04-26',3],['2018-04-27',3],['2018-04-28',4],
+  ['2018-04-29',5],['2018-04-30',3],['2018-05-01',4],['2018-05-02',4],
+  ['2018-05-03',4],['2018-05-04',3],['2018-05-05',3],['2018-05-06',4],
+  ['2018-05-07',1],['2018-05-08',4],['2018-05-09',4],['2018-05-10',4],
+  ['2018-05-11',6],['2018-05-12',4],['2018-05-13',6],['2018-05-14',8],
+  ['2018-05-15',5],['2018-05-16',7],['2018-05-17',7],['2018-05-18',5],
+  ['2018-05-19',9],['2018-05-20',6],['2018-05-21',7],['2018-05-22',7],
+  ['2018-05-23',8],['2018-05-24',3],['2018-05-25',6],['2018-05-26',2],
+  ['2018-05-27',10],['2018-05-28',7],['2018-05-29',7],['2018-05-30',6],
+  ['2018-05-31',9],['2018-06-01',7],
+  // ── Feature release ── (index 107)
+  ['2018-06-02',10],['2018-06-03',14],['2018-06-04',10],['2018-06-05',11],
+  ['2018-06-06',14],['2018-06-07',12],['2018-06-08',9],['2018-06-09',9],
+  ['2018-06-10',12],['2018-06-11',13],['2018-06-12',8],['2018-06-13',13],
+  ['2018-06-14',14],['2018-06-15',13],['2018-06-16',9],['2018-06-17',10],
+  ['2018-06-18',19],['2018-06-19',20],['2018-06-20',17],['2018-06-21',8],
+  ['2018-06-22',9],['2018-06-23',18],['2018-06-24',12],['2018-06-25',14],
+  ['2018-06-26',13],['2018-06-27',10],['2018-06-28',10],['2018-06-29',12],
+  ['2018-06-30',8],['2018-07-01',14],['2018-07-02',13],['2018-07-03',14],
+  ['2018-07-04',11],['2018-07-05',13],['2018-07-06',13],['2018-07-07',10],
+  ['2018-07-08',13],['2018-07-09',18],['2018-07-10',12],['2018-07-11',12],
+  ['2018-07-12',19],['2018-07-13',10],['2018-07-14',13],['2018-07-15',14],
+  ['2018-07-16',6],['2018-07-17',11],['2018-07-18',15],['2018-07-19',15],
+  ['2018-07-20',17],['2018-07-21',7],['2018-07-22',18],['2018-07-23',12],
+  ['2018-07-24',10],['2018-07-25',12],['2018-07-26',7],['2018-07-27',12],
+  ['2018-07-28',14],['2018-07-29',15],['2018-07-30',15],['2018-07-31',15],
+  ['2018-08-01',15],['2018-08-02',11],['2018-08-03',10],['2018-08-04',15],
+  ['2018-08-05',15],['2018-08-06',12],['2018-08-07',13],['2018-08-08',13],
+  ['2018-08-09',10],['2018-08-10',14],['2018-08-11',17],['2018-08-12',11],
+  ['2018-08-13',13],['2018-08-14',14],['2018-08-15',11],['2018-08-16',15],
+  ['2018-08-17',18],['2018-08-18',11],['2018-08-19',9],['2018-08-20',16],
+  ['2018-08-21',23],['2018-08-22',10],['2018-08-23',13],['2018-08-24',8],
+  ['2018-08-25',10],['2018-08-26',14],['2018-08-27',13],['2018-08-28',11],
+  ['2018-08-29',10],['2018-08-30',12],['2018-08-31',10],['2018-09-01',13],
+  ['2018-09-02',16],['2018-09-03',10],['2018-09-04',8],['2018-09-05',17],
+  ['2018-09-06',9],['2018-09-07',11],['2018-09-08',16],['2018-09-09',12],
+  ['2018-09-10',11],['2018-09-11',20],['2018-09-12',11],['2018-09-13',12],
+  ['2018-09-14',7],['2018-09-15',9],['2018-09-16',12],['2018-09-17',9],
+  ['2018-09-18',12],['2018-09-19',16],['2018-09-20',15],['2018-09-21',15],
+  ['2018-09-22',10],['2018-09-23',10],['2018-09-24',7],['2018-09-25',12],
+  ['2018-09-26',13],['2018-09-27',11],['2018-09-28',15],['2018-09-29',10],
+  ['2018-09-30',11],['2018-10-01',8],['2018-10-02',11],['2018-10-03',7],
+  ['2018-10-04',12],['2018-10-05',19],['2018-10-06',11],['2018-10-07',13],
+  ['2018-10-08',15],['2018-10-09',9],['2018-10-10',8],['2018-10-11',8],
+  ['2018-10-12',12],['2018-10-13',14],['2018-10-14',9],['2018-10-15',14],
+  ['2018-10-16',5],['2018-10-17',10],['2018-10-18',12],['2018-10-19',9],
+  ['2018-10-20',12],['2018-10-21',12],['2018-10-22',9],['2018-10-23',9],
+  ['2018-10-24',10],['2018-10-25',9],['2018-10-26',10],['2018-10-27',6],
+  ['2018-10-28',10],['2018-10-29',9],['2018-10-30',12],['2018-10-31',12],
+  ['2018-11-01',15],['2018-11-02',16],['2018-11-03',12],['2018-11-04',10],
+  ['2018-11-05',14],['2018-11-06',17],['2018-11-07',13],['2018-11-08',15],
+  ['2018-11-09',11],['2018-11-10',10],['2018-11-11',17],['2018-11-12',6],
+  ['2018-11-13',7],['2018-11-14',8],['2018-11-15',12],['2018-11-16',14],
+  ['2018-11-17',16],['2018-11-18',17],['2018-11-19',16],['2018-11-20',15],
+  ['2018-11-21',11],['2018-11-22',11],['2018-11-23',11],['2018-11-24',8],
+  ['2018-11-25',12],['2018-11-26',11],['2018-11-27',13],['2018-11-28',16],
+  ['2018-11-29',10],['2018-11-30',14],['2018-12-01',13],['2018-12-02',16],
+  ['2018-12-03',8],['2018-12-04',14],['2018-12-05',11],['2018-12-06',10],
+  ['2018-12-07',8],['2018-12-08',13],['2018-12-09',9],['2018-12-10',14],
+  ['2018-12-11',9],['2018-12-12',7],['2018-12-13',14],['2018-12-14',9],
+  ['2018-12-15',8],['2018-12-16',14],['2018-12-17',15],['2018-12-18',9],
+  ['2018-12-19',8],['2018-12-20',14],['2018-12-21',8],['2018-12-22',10],
+  ['2018-12-23',13],['2018-12-24',11],['2018-12-25',14],['2018-12-26',10],
+  ['2018-12-27',14],['2018-12-28',16],['2018-12-29',13],['2018-12-30',8],
+  ['2018-12-31',10],['2019-01-01',13],['2019-01-02',14],['2019-01-03',12],
+  ['2019-01-04',6],['2019-01-05',9],['2019-01-06',11],['2019-01-07',11],
+  ['2019-01-08',7],['2019-01-09',10],['2019-01-10',9],['2019-01-11',10],
+  ['2019-01-12',14],['2019-01-13',11],['2019-01-14',13],['2019-01-15',8],
+  ['2019-01-16',5],['2019-01-17',12],['2019-01-18',15],['2019-01-19',7],
+  ['2019-01-20',10],['2019-01-21',12],['2019-01-22',14],['2019-01-23',7],
+  ['2019-01-24',10],['2019-01-25',15],['2019-01-26',6],['2019-01-27',7],
+  ['2019-01-28',14],['2019-01-29',7],['2019-01-30',10],['2019-01-31',8],
+  ['2019-02-01',10]
+];
+
+const RELEASE_IDX = 107; // index of '2018-06-02'
+const AVG_BEFORE  = 3.63;
+const AVG_AFTER   = 11.79;
+
+const allDates = raw.map(r => r[0]);
+const allDAU   = raw.map(r => r[1]);
+
+// Split at release — share the release point so lines connect
+const dauBefore = allDAU.map((v, i) => i <= RELEASE_IDX ? v : null);
+const dauAfter  = allDAU.map((v, i) => i >= RELEASE_IDX ? v : null);
+const avgBeforeLine = allDAU.map((_, i) => i <  RELEASE_IDX ? AVG_BEFORE : null);
+const avgAfterLine  = allDAU.map((_, i) => i >= RELEASE_IDX ? AVG_AFTER  : null);
+
+// Top 20 cards by status changes
+const cardNames = [
+  'Kutch-Mueller','Osinski Inc',"O'Kon Group",
+  'Boehm, West and Oberbrunner',"O'Keefe Inc",
+  'Waters, Lockman and Keebler','Hessel Group','Gerlach Inc',
+  'Breitenberg, Waelchi and Murphy','Jacobson, Mertz and Kiehn',
+  'Carroll, Lindgren and Schoen','Kunde Group','Luettgen-Kling',
+  'Sanford Ltd','Waelchi-Haag','Moore Ltd','Doyle and Sons',
+  'Jaskolski-Senger','Schoen, Streich and Wolff','Barrows-Abshire'
+];
+const cardChanges = [6,5,5,5,5,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3];
+
+// ============================================================
+// Plugin: background regions + release line
+// ============================================================
+const featureLinePlugin = {
+  id: 'featureLine',
+  beforeDraw(chart) {
+    const { ctx, chartArea: ca, scales } = chart;
+    if (!ca) return;
+    const xPx = scales.x.getPixelForValue(RELEASE_IDX);
+    ctx.save();
+    ctx.fillStyle = 'rgba(148,163,184,0.08)';
+    ctx.fillRect(ca.left, ca.top, xPx - ca.left, ca.bottom - ca.top);
+    ctx.fillStyle = 'rgba(79,70,229,0.06)';
+    ctx.fillRect(xPx, ca.top, ca.right - xPx, ca.bottom - ca.top);
+    ctx.restore();
+  },
+  afterDatasetsDraw(chart) {
+    const { ctx, chartArea: ca, scales } = chart;
+    if (!ca) return;
+    const xPx = scales.x.getPixelForValue(RELEASE_IDX);
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(xPx, ca.top);
+    ctx.lineTo(xPx, ca.bottom);
+    ctx.strokeStyle = '#EF4444';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font = '600 11px -apple-system, sans-serif';
+    ctx.fillStyle = '#EF4444';
+    ctx.textAlign = 'center';
+    ctx.fillText('Feature Release', xPx, ca.top - 10);
+    ctx.restore();
+  }
+};
+
+// ============================================================
+// Chart 1 — Daily Active Users
+// ============================================================
+new Chart(document.getElementById('dauChart').getContext('2d'), {
+  type: 'line',
+  plugins: [featureLinePlugin],
+  data: {
+    labels: allDates,
+    datasets: [
+      {
+        label: 'DAU (Before)',
+        data: dauBefore,
+        borderColor: '#94A3B8',
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        tension: 0.2,
+        fill: false,
+        spanGaps: false
+      },
+      {
+        label: 'DAU (After)',
+        data: dauAfter,
+        borderColor: '#4F46E5',
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        tension: 0.2,
+        fill: false,
+        spanGaps: false
+      },
+      {
+        label: 'Avg Before (3.63)',
+        data: avgBeforeLine,
+        borderColor: '#94A3B8',
+        borderDash: [8, 4],
+        borderWidth: 1.5,
+        pointRadius: 0,
+        tension: 0,
+        fill: false,
+        spanGaps: false
+      },
+      {
+        label: 'Avg After (11.79)',
+        data: avgAfterLine,
+        borderColor: '#4F46E5',
+        borderDash: [8, 4],
+        borderWidth: 1.5,
+        pointRadius: 0,
+        tension: 0,
+        fill: false,
+        spanGaps: false
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    layout: { padding: { top: 28 } },
+    interaction: { mode: 'index', intersect: false },
+    scales: {
+      x: {
+        grid: { color: '#F1F5F9' },
+        ticks: {
+          color: '#64748B',
+          font: { size: 10 },
+          autoSkip: false,
+          maxRotation: 0,
+          callback: function(val, index) {
+            const d = allDates[index];
+            // Show label only on the 1st of each month
+            if (d && d.substring(8) === '01') return d.substring(0, 7);
+            return '';
+          }
+        }
+      },
+      y: {
+        beginAtZero: true,
+        max: 28,
+        grid: { color: '#F1F5F9' },
+        ticks: { color: '#64748B', font: { size: 11 } },
+        title: {
+          display: true,
+          text: 'Daily Active Users',
+          color: '#64748B',
+          font: { size: 11 }
+        }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1E293B',
+        titleColor: '#F8FAFC',
+        bodyColor: '#CBD5E1',
+        padding: 12,
+        cornerRadius: 8,
+        filter: item => item.datasetIndex < 2
+      }
+    }
+  }
+});
+
+// ============================================================
+// Chart 2 — Status Changes by Card (top 20, horizontal bar)
+// ============================================================
+new Chart(document.getElementById('statusChart').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: cardNames,
+    datasets: [{
+      label: 'Status Changes',
+      data: cardChanges,
+      backgroundColor: '#4F46E5',
+      borderRadius: 4,
+      borderSkipped: 'start'
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    scales: {
+      x: {
+        beginAtZero: true,
+        max: 8,
+        grid: { color: '#F1F5F9' },
+        ticks: { color: '#64748B', font: { size: 11 }, stepSize: 1 },
+        title: {
+          display: true,
+          text: 'Number of Status Changes',
+          color: '#64748B',
+          font: { size: 11 }
+        }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { color: '#475569', font: { size: 11 } }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1E293B',
+        titleColor: '#F8FAFC',
+        bodyColor: '#CBD5E1',
+        padding: 12,
+        cornerRadius: 8,
+        callbacks: {
+          label: ctx => ` ${ctx.parsed.x} status change${ctx.parsed.x !== 1 ? 's' : ''}`
+        }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
